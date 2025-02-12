@@ -55,8 +55,8 @@ var productExceptSelf = function(nums) {
     for (let i=length-2; i>=0; i--) {
         rightProd[i] = (rightProd[i+1] * nums[i+1])
     }
-    for (let i=0; i<nums.length; i++) {
-        result[i] = leftProd[i] * rightProd[i]
+    for (let i=length-1; i>=0; i--) {
+        result[i] = leftProd.pop() * rightProd.pop()
     }
     return result
 };
