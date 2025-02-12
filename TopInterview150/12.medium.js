@@ -48,14 +48,37 @@ var productExceptSelf = function(nums) {
 
     leftProd[0] = 1
     for (let i=0; i<length-1; i++) {
-        leftProd[i+1] = (leftProd[i] * nums[i])
+        leftProd[i+1] = leftProd[i] * nums[i]
     }
     rightProd[length-1] = 1
     for (let i=length-1; i>0; i--) {
-        rightProd[i-1] = (rightProd[i] * nums[i])
+        rightProd[i-1] = rightProd[i] * nums[i]
     }
     for (let i=length-1; i>=0; i--) {
         nums[i] = leftProd.pop() * rightProd.pop()
     }
     return nums
 };
+
+
+//Optimal solution
+
+var productExceptSelf = function(nums) {
+    
+    let leftProd = Array(nums.length)
+    let result = Array(nums.length)
+    let range = nums.length-1
+
+    leftProd[0] = 1
+    for (let i=0; i<range; i++) {
+        leftProd[i+1] = leftProd[i] * nums[i]
+    }
+    let rightProd = 1
+    for (let i = range; i>=0; i--) {
+        result[i] = rightProd * leftProd[i]
+        rightProd*=nums[i]
+    }
+    return result
+};
+
+//uses a single loop for constructing the result array by keeping track of the current rightProduct
