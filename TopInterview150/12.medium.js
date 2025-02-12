@@ -45,7 +45,6 @@ var productExceptSelf = function(nums) {
     let length = nums.length
     let leftProd = Array(nums.length)
     let rightProd = Array(nums.length)
-    let result = Array(nums.length)
 
     leftProd[0] = 1
     for (let i=1; i<length; i++) {
@@ -56,7 +55,7 @@ var productExceptSelf = function(nums) {
         rightProd[i] = (rightProd[i+1] * nums[i+1])
     }
     for (let i=length-1; i>=0; i--) {
-        result[i] = leftProd.pop() * rightProd.pop()
+        nums[i] = leftProd.pop() * rightProd.pop()
     }
-    return result
+    return nums
 };
