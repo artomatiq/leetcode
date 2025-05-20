@@ -153,3 +153,22 @@ var isValid = function (s) {
     if (running === null) return true
     return true
 }
+
+
+
+
+//optimal solution
+
+var isValid = function(s) {
+    const stack = []
+    const map = new Map ([
+        [')', '('],
+        [']', '['],
+        ['}', '{']
+    ])
+    for (const char of s) {
+        if (!map.has(char)) stack.push(char)
+        else if (stack.pop() !== map.get(char)) return false
+    }
+    return stack.length === 0;
+};
