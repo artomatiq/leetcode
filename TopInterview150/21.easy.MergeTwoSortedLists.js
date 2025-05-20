@@ -95,16 +95,6 @@ var mergeTwoLists = function (list1, list2) {
             val2 = val2.next
         }
     }
-    if (val1) {
-        while (val1) {
-            list.enqueue(val1.val)
-            val1 = val1.next
-        }
-    } else if (val2) {
-        while (val2) {
-            list.enqueue(val2.val)
-            val2 = val2.next
-        }
-    }
+    list.head.next = val1 || val2
     return list.head
 };
