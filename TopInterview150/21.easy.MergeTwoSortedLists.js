@@ -144,7 +144,7 @@ var mergeTwoLists = function (list1, list2) {
     if (!list1) return list2
     else if (!list2) return list1
     
-    const dummy = {val: 1, next: list1}
+    const dummy = {val: 1, next: null}
     let tail = dummy
     let val1 = list1
     let val2 = list2
