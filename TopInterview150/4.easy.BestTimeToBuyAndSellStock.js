@@ -46,3 +46,18 @@ var maxProfit = function(prices) {
     }
     return profit
 };
+
+
+
+//but here is a simpler solution
+
+var maxProfit = function(prices) {
+    let buyPrice = prices[0]
+    let profit = 0
+
+    for (let i=1; i<prices.length; i++) {
+        buyPrice = Math.min(prices[i], buyPrice)
+        profit = Math.max(prices[i] - buyPrice, profit)
+    }
+    return profit
+};
