@@ -98,3 +98,45 @@ var mergeTwoLists = function (list1, list2) {
     list.head.next = val1 || val2
     return list.head
 };
+
+
+
+/**
+ * this solution changes list1 in place instead of creating a new node list
+ * it's important to return dummy.next intead of list1 
+ *      if a node is inserted before the first node of list1, it won't return the right list
+ */
+
+var mergeTwoLists = function (list1, list2) {
+    if (!list1) return list2
+    else if (!list2) return list1
+    
+    const dummy = {val: 1, next: list1}
+    let val1 = dummy
+    let val2 = list2
+
+    while (val1.next && val2) {
+        if (val1.next.val <= val2.val) {
+            val1 = val1.next
+        } else {
+            let inputNode = val2
+            let snippet = val1.next
+            val1.next = inputNode
+            val2 = val2.next
+            inputNode.next = snippet
+        }
+    }
+    if (val2) {
+        val1.next = val2
+    }
+    return dummy.next
+};
+
+
+
+
+/**
+ * this is the most elegant solution
+ * it eliminates the need to create snipped objects by using a tail variable
+ */
+
