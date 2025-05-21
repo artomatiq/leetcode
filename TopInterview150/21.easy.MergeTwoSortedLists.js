@@ -140,3 +140,24 @@ var mergeTwoLists = function (list1, list2) {
  * it eliminates the need to create snipped objects by using a tail variable
  */
 
+var mergeTwoLists = function (list1, list2) {
+    if (!list1) return list2
+    else if (!list2) return list1
+    
+    const dummy = {val: 1, next: list1}
+    let tail = dummy
+    let val1 = list1
+    let val2 = list2
+    while (val1 && val2) {
+        if (val1.val <= val2.val) {
+            tail.next = val1
+            val1 = val1.next
+        } else {
+            tail.next = val2
+            val2 = val2.next
+        }
+        tail = tail.next
+    }
+    tail.next = val1 || val2
+    return dummy.next
+};
