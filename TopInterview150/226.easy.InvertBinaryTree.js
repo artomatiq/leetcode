@@ -47,7 +47,7 @@ var invertTree = function (root) {
 
 //here are the iterative solutions
 
-//BFS - breadth first
+//DFS - depth first
 
 var invertTree = function (root) {
     if (!root) return root
@@ -69,5 +69,53 @@ var invertTree = function (root) {
 
 
 
-//DPS - depth first
+//BFS - breadth first
 
+var invertTree = function (root) {
+    if (!root) return root
+
+    class Queue {
+        constructor() {
+            this.head = null
+            this.tail = null
+            this.size = 0
+        }
+
+        enqueue(val) {
+            const node = { val: val, next: null }
+            if (!this.head) {
+                this.head = node
+                this.tail = node
+            } else {
+                this.tail.next = node
+                this.tail = node
+            }
+            this.size++
+        }
+
+        dequeue() {
+            if (!this.head) return null
+            const removed = this.head.val
+            this.head = this.head.next
+            this.size--
+            return removed
+        }
+    }
+
+    function swap(node) {
+        const temp = node.left
+        node.left = node.right
+        node.right = temp
+    }
+
+    let q = new Queue()
+    q.enqueue(root)
+
+    while (q.head) {
+        const cur = q.dequeue()
+        swap(cur)
+        if (cur.left) q.enqueue(cur.left)
+        if (cur.right) q.enqueue(cur.right)
+    }
+    return root
+}
