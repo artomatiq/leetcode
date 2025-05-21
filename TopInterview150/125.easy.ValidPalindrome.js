@@ -28,3 +28,24 @@ Constraints:
 s consists only of printable ASCII characters.
  */
 
+//initial solution
+
+var isPalindrome = function(s) {
+    let string = ''
+    for (char of s.split('')) {
+        const charCode = char.charCodeAt(0)
+        //is a number
+        if (charCode >=48 && charCode <= 57) {
+            string += char
+        }
+        //is lowercase
+        else if (charCode >=97 && charCode <= 122) {
+            string += char
+        }
+        //is uppercase
+        else if (charCode >=65 && charCode <= 90) {
+            string += String.fromCharCode(charCode+32)
+        }
+    }
+    return string === string.split('').reverse().join('')
+};
