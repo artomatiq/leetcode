@@ -23,3 +23,25 @@ Constraints:
 All the integers in nums are unique.
 nums is sorted in ascending order.
  */
+
+//my solution
+
+var search = function (nums, target) {
+    let leftIndex = 0
+    let rightIndex = nums.length - 1
+
+    while (leftIndex + 1 < rightIndex) {
+        let midIndex = Math.floor(leftIndex + ((rightIndex - leftIndex) / 2))
+        if (nums[midIndex] === target) return midIndex
+        if (nums[midIndex] < target) {
+            leftIndex = midIndex
+            continue
+        } 
+        rightIndex = midIndex
+    }
+    if (target === nums[leftIndex]) return leftIndex
+    if (target === nums[rightIndex]) return rightIndex
+    return -1
+};
+
+
