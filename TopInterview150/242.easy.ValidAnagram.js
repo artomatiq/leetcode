@@ -43,3 +43,22 @@ var isAnagram = function(s, t) {
     return !map.size
 };
 
+
+
+//this is the optimal solution
+
+    //a fixed size array is more performant than a map object
+    //both time and space complexity benefit from this solution
+
+var isAnagram = function(s, t) {
+    const set = new Array(26).fill(0);
+    if (s.length !== t.length) {
+        return false;
+    } else {
+        for (let i=0;i<s.length;i++) {
+            set[s.charCodeAt(i) - 97]++;
+            set[t.charCodeAt(i) - 97]--;
+        }
+    }
+    return set.every(item => item === 0);
+};
