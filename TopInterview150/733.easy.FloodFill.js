@@ -45,3 +45,30 @@ n == image[i].length
 0 <= sc < n
  */
 
+//initial solution
+
+var floodFill = function (image, sr, sc, color) {
+    const num = image[sr][sc]
+
+    function fill(sr, sc, previous) {
+        if (image[sr][sc] === color || image[sr][sc] !== num) return
+
+        image[sr][sc] = color
+
+        if (previous !== 'd' && image[sr + 1]?.[sc] === num) { //check down
+            fill(sr + 1, sc, 'u')
+        } 
+        if (previous !== 'l' && image[sr]?.[sc - 1] === num) { //check left
+            fill(sr, sc - 1, 'r')
+        } 
+        if (previous !== 'u' && image[sr - 1]?.[sc] === num) { //check up
+            fill(sr - 1, sc, 'd')
+        } 
+        if (previous !== 'r' && image[sr]?.[sc + 1] === num) { //check right
+            fill(sr, sc + 1, 'l')
+        }
+        return
+    }
+    fill(sr, sc, null)
+    return image
+};
