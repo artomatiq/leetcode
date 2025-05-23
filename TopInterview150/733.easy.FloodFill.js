@@ -67,8 +67,39 @@ var floodFill = function (image, sr, sc, color) {
         if (previous !== 'r' && image[sr]?.[sc + 1] === num) { //check right
             fill(sr, sc + 1, 'l')
         }
-        return
+        return  //we don't need this return statement because every function call eventually hits the base case
     }
     fill(sr, sc, null)
+    return image
+};
+
+
+
+
+//simplified
+
+//there is no reason to keep track of previous because previous is already updated to color which stops the loop at the top
+//instead of putting a GUARD CLAUSE to make sure recursion is not called on an undefined block, we can put the guard clause at the top of the next function call
+
+var floodFill = function (image, sr, sc, color) {
+    const num = image[sr][sc]
+    if (num === color) return image //this is necessary in case color is the same as the starting number aka no difference b/w filled and to-be-filled -> infinite recusrion
+
+    function fill(sr, sc) {
+
+        if (image[sr]?.[sc] !== num) return //guard clause (avoids type errors) + base case
+
+        image[sr][sc] = color
+        //check down
+        fill(sr + 1, sc)
+        //check left
+        fill(sr, sc - 1)
+        //check up
+        fill(sr - 1, sc)
+        //check right
+        fill(sr, sc + 1)
+    }
+
+    fill(sr, sc)
     return image
 };
