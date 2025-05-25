@@ -53,3 +53,19 @@ var lowestCommonAncestor = function(root, p, q) {
         }
     }
 };
+
+
+//simplified
+
+var lowestCommonAncestor = function (root, p, q) {
+    let cur = root
+    while (true) {
+        const val = cur.val
+        if (val === p.val || val === q.val) return cur
+        if (p.val < val && q.val < val) {
+            cur = cur.left;
+        } else if (p.val > val && q.val > val) {
+            cur = cur.right;
+        } else return cur;
+    }
+};
