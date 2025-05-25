@@ -33,3 +33,23 @@ p != q
 p and q will exist in the BST.
  */
 
+//initial solution
+
+var lowestCommonAncestor = function(root, p, q) {
+    let cur = root
+    while (true) {
+        const val = cur.val
+        if (val === p.val || val === q.val) return cur
+        
+        else if (p.val < val) {
+            if (q.val < val) {
+                cur = cur.left
+            } else return cur
+        }
+        else if (p.val > val) {
+            if (q.val > val) {
+                cur = cur.right
+            } else return cur
+        }
+    }
+};
