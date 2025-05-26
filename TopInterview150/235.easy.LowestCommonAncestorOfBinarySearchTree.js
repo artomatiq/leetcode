@@ -69,3 +69,30 @@ var lowestCommonAncestor = function (root, p, q) {
         } else return cur;
     }
 };
+
+//optimized
+
+/**
+ * If p or q are references to actual nodes in the tree, it's better to compare directly:
+ * property access is more expensive in JS
+ * 
+ * if (cur === p || cur === q)
+ * 
+ * instead of
+ * 
+ * if (cur.val === p.val || cur.val === q.val)
+ */
+
+var lowestCommonAncestor = function(root, p, q) {
+    let cur = root;
+    while (cur) {
+        if (p.val < cur.val && q.val < cur.val) {
+            cur = cur.left;
+        } else if (p.val > cur.val && q.val > cur.val) {
+            cur = cur.right;
+        } else {
+            return cur;
+        }
+    }
+    return null;
+};
