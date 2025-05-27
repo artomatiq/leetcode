@@ -84,3 +84,60 @@ MyQueue.prototype.empty = function() {
     if (this.pointer > this.array.length-1) return true
     return false
 };
+
+
+//corrected solution
+
+//the solution above violates the condition...must only use push and pop on the stacks
+
+var MyQueue = function() {
+    this.array = []
+    this.inverseArray = []
+};
+
+/** 
+ * @param {number} x
+ * @return {void}
+ */
+MyQueue.prototype.push = function(x) {
+    this.array.push(x)
+};
+
+/**
+ * @return {number}
+ */
+MyQueue.prototype.pop = function() {
+    if (this.inverseArray.length) {
+        return this.inverseArray.pop()
+    }
+    else {
+        while (this.array.length) {
+            this.inverseArray.push(this.array.pop())
+        }
+        return this.inverseArray.pop()
+    }
+};
+
+/**
+ * @return {number}
+ */
+MyQueue.prototype.peek = function() {
+    if (this.inverseArray.length) {
+        return this.inverseArray[this.inverseArray.length-1]
+    }
+    else {
+        const count = this.array.length
+        while (this.array.length) {
+            this.inverseArray.push(this.array.pop())
+        }
+        return this.inverseArray[this.inverseArray.length-1]
+    }
+};
+
+/**
+ * @return {boolean}
+ */
+MyQueue.prototype.empty = function() {
+    if (!this.inverseArray.length && !this.array.length) return true
+    return false
+};
