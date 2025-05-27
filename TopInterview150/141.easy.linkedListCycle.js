@@ -47,3 +47,17 @@ var hasCycle = function(head) {
     }
     return false
 };
+
+//optimal space complexity....two loops solution
+
+var hasCycle = function(head) {
+    if (!head) return false
+    let slow = head
+    let fast = head
+    while (true) {
+        slow = slow.next
+        fast = fast.next?.next
+        if (!fast) return false
+        if (slow === fast) return true
+    }
+};
