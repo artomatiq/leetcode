@@ -51,3 +51,62 @@ var solution = function(isBadVersion) {
         }
     };
 };
+
+//optimal
+
+var solution = function(isBadVersion) {
+    /**
+     * @param {integer} n Total versions
+     * @return {integer} The first bad version
+     */
+    return function(n) {
+        let left = 1
+        let right = n
+        if (isBadVersion(left)) return left
+        while (right > left + 1) {
+            let middle = Math.floor((left + right) / 2)
+            if (isBadVersion(middle)) {
+                right = middle
+            } else left = middle
+        }
+        return right
+    };
+};
+
+//cleaner versions
+
+var solution = function(isBadVersion) {
+    /**
+     * @param {integer} n Total versions
+     * @return {integer} The first bad version
+     */
+    return function(n) {
+        let left = 1
+        let right = n
+        while (right > left) {
+            let middle = Math.floor((left + right) / 2)
+            if (isBadVersion(middle)) {
+                right = middle - 1  
+            } else left = middle //this ensures the left cannot end up being the answer
+        }
+        return right //so we return right
+    };
+};
+
+var solution = function(isBadVersion) {
+    /**
+     * @param {integer} n Total versions
+     * @return {integer} The first bad version
+     */
+    return function(n) {
+        let left = 1
+        let right = n
+        while (right > left) {
+            let middle = Math.floor((left + right) / 2)
+            if (isBadVersion(middle)) {
+                right = middle //this ensures the right cannot end up being the answer
+            } else left = middle + 1 
+        }
+        return left //so we return left
+    };
+};
