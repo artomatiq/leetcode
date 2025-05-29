@@ -26,3 +26,28 @@ Constraints:
 
 1 <= bad <= n <= 231 - 1
  */
+
+//initial solution
+
+var solution = function(isBadVersion) {
+    /**
+     * @param {integer} n Total versions
+     * @return {integer} The first bad version
+     */
+    return function(n) {
+        let left = 1
+        let right = n
+        while (right >= left) {
+            let middle = Math.floor((left + right) / 2)
+            if (isBadVersion(middle)) {
+                if (isBadVersion(middle-1)) {
+                    right = middle - 1
+                } else {
+                    return middle
+                }
+            } else {
+                left = middle + 1
+            }
+        }
+    };
+};
