@@ -92,21 +92,3 @@ var solution = function(isBadVersion) {
         return right //so we return right
     };
 };
-
-var solution = function(isBadVersion) {
-    /**
-     * @param {integer} n Total versions
-     * @return {integer} The first bad version
-     */
-    return function(n) {
-        let left = 1
-        let right = n
-        while (right > left) {
-            let middle = Math.floor((left + right) / 2)
-            if (isBadVersion(middle)) {
-                right = middle //this ensures the right cannot end up being the answer
-            } else left = middle + 1 
-        }
-        return left //so we return left
-    };
-};
