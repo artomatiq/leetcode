@@ -24,3 +24,21 @@ Constraints:
 ransomNote and magazine consist of lowercase English letters.
  */
 
+//initial solution
+
+var canConstruct = function (ransomNote, magazine) {
+    let map = new Map()
+    for (char of ransomNote) {
+        map.set(char, (map.get(char) || 0) + 1)
+    }
+    for (char of magazine) {
+        if (!map.size) break
+        if (map.has(char)) {
+            map.set(char, map.get(char) - 1)
+            if (map.get(char) === 0) {
+                map.delete(char)
+            }
+        }
+    }
+    return !map.size
+};
