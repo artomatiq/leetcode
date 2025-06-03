@@ -30,16 +30,29 @@ Constraints:
 //initial solution
 
 var climbStairs = function(n) {
-    
     function recurse(n) {
         if (n < 2) return 1
-
         else {
             let previous = recurse(n-1)
             let twoBefore = recurse(n-2)
             return previous + twoBefore
         }
     }
+    return recurse(n)
+};
 
+//better time complexity using memorization
+
+var climbStairs = function(n) {
+    let map = new Map()
+    function recurse(n) {
+        if (n < 2) return 1
+        else {
+            let previous = recurse(n-1)
+            map.set(n-1, previous)
+            let twoBefore = map.has(n-2)? map.get(n-2) : recurse(n-2)
+            return previous + twoBefore
+        }
+    }
     return recurse(n)
 };
