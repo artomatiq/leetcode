@@ -71,3 +71,15 @@ var climbStairs = function(n) {
     }
     return recurse(n)[1]
 };
+
+//iterative solution
+
+var climbStairs = function(n) {
+    let prev = 0
+    let result = 1
+    for (i=0; i<n; i++) {
+        result += prev
+        prev = result - prev
+    }
+    return result
+};
