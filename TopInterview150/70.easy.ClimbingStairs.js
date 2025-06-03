@@ -56,3 +56,18 @@ var climbStairs = function(n) {
     }
     return recurse(n)
 };
+
+//better space complexity using dynamic programming
+
+//here we are not keeping a memory map, but we are rather passing up the n-1 and the n-2 values up the callback stack
+
+var climbStairs = function(n) {
+    function recurse(n) {
+        if (n === 1) {
+            return [1, 1]
+        }
+        let [twoBefore, prev] = recurse(n-1)
+        return [prev, twoBefore + prev]
+    }
+    return recurse(n)[1]
+};
