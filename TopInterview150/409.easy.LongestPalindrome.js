@@ -23,3 +23,25 @@ Constraints:
 s consists of lowercase and/or uppercase English letters only.
  */
 
+//initial solution
+
+var longestPalindrome = function(s) {
+    let result = 0
+    let odds = false
+    let map = new Map()
+    for (char of s) {
+        map.set(char, (map.get(char) || 0) + 1)
+    }
+    for (let [char, freq] of map) {
+        console.log(char, freq)
+        if (freq % 2 === 0) {
+            result+=freq
+        } else {
+            result+=freq-1
+            odds = true
+        }
+    }
+    if (odds) {
+        return result + 1
+    } else return result
+};
