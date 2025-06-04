@@ -27,3 +27,21 @@ The number of nodes in the list is the range [0, 5000].
 Follow up: A linked list can be reversed either iteratively or recursively. Could you implement both?
  */
 
+//initial sln
+
+var reverseList = function(head) {
+    if (!head || !head.next) return head
+    
+    let a = head
+    let b = head.next
+    while (b.next) {
+        let c = b.next
+        b.next = a
+        a = b
+        b = c
+    }
+    b.next = a
+    head.next = null
+    head = b
+    return head
+};
