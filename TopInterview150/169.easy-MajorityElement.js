@@ -35,3 +35,7 @@ var majorityElement = function(nums) {
     }
 };
 
+//Boyer-Moore Voting Algorithm
+
+//pairs up each majority element with non majority elemnt and crosses out pairs until the majority is left alone (majority must be present)
+
