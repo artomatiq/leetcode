@@ -20,5 +20,14 @@ a and b consist only of '0' or '1' characters.
 Each string does not contain leading zeros except for the zero itself.
  */
 
-//initial solution
+//incorrect solution
 
+var addBinary = function(a, b) {
+    let aNum = parseInt(a, 2)
+    let bNum = parseInt(b, 2)
+    let sum = aNum + bNum
+
+    return sum.toString(2)
+};
+
+//this does not work because parseInt() is imprecise for very large inputs
