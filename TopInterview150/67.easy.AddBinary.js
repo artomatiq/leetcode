@@ -56,3 +56,29 @@ var addBinary = function(a, b) {
 
     return result;
 };
+
+//new optimal solution
+
+//here, we are avoiding creating a new string every time, and are instead reversing the array once at the end to yield the result
+
+var addBinary = function(a, b) {
+    let result = []
+
+    let i = a.length - 1
+    let j = b.length - 1
+    let carry = 0
+
+    while (i>-1 || j>-1 || carry ) {
+        let numA = i > -1? parseInt(a[i]) : 0
+        let numB = j > -1? parseInt(b[j]) : 0
+
+        let sum = numA + numB + carry
+        result.push(String(sum % 2))
+        carry = Math.floor(sum/2)
+
+        i--
+        j--
+    }
+    
+    return result.reverse().join('')
+};
