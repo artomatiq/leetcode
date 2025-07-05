@@ -27,3 +27,31 @@ The number of nodes in the tree is in the range [1, 104].
 -100 <= Node.val <= 100
  */
 
+
+
+//sln
+
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var diameterOfBinaryTree = function(root) {
+    let maxDiameter = 0;
+
+    function dfs(node) {
+        if (!node) return 0;
+
+        const left = dfs(node.left);
+        const right = dfs(node.right);
+
+        // update the max diameter if this path is longer
+        maxDiameter = Math.max(maxDiameter, left + right);
+
+        // return the height of the current subtree
+        return 1 + Math.max(left, right);
+    }
+
+    dfs(root);
+
+    return maxDiameter;
+};
