@@ -62,6 +62,33 @@ var addBinary = function(a, b) {
 //here, we are avoiding creating a new string every time, and are instead reversing the array once at the end to yield the result
 
 var addBinary = function(a, b) {
+
+    let result = []
+    let carry = 0
+
+    for (let i=a.length-1, j=b.length-1; i >= 0 || j >= 0; i--, j--) {
+        let addendA = a[i] || '0'
+        let addendB = b[j] || '0'
+
+        let sum = Number(addendA) + Number(addendB) + carry
+        if (sum < 2) {
+            result.push(`${sum}`)
+            carry = 0
+        } else if (sum === 2) {
+            result.push('0')
+            carry = 1
+        }
+        else {
+            result.push('1')
+        }
+    }
+    if (carry) result.push('1')
+    return result.reverse().join('')
+};
+
+//more elegent version
+
+var addBinary = function(a, b) {
     let result = []
 
     let i = a.length - 1
