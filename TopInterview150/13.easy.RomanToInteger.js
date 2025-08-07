@@ -43,3 +43,37 @@ s contains only the characters ('I', 'V', 'X', 'L', 'C', 'D', 'M').
 It is guaranteed that s is a valid roman numeral in the range [1, 3999].
  */
 
+//initial solution
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var romanToInt = function(s) {
+    const map = new Map([ 
+        ['I', 1], ['V', 5], ['X', 10], ['L', 50], ['C', 100], ['D', 500], ['M', 1000]
+    ])
+    const specials = {
+        'IV': 4,
+        'IX': 9,
+        'XL': 40,
+        'XC': 90,
+        'CD': 400,
+        'CM': 900,
+    }
+    let result = 0
+    for (let i=0; i<s.length; i++) {
+        if (s[i + 1]) {
+            const pair = s.slice(i, i+2)
+            if (specials[pair]) {
+                result += specials[pair]
+                i++
+            } else {
+                result += map.get(s[i])
+            }
+        } else {
+            result += map.get(s[i])
+        }
+    }
+    return result
+};
