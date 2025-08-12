@@ -1,9 +1,7 @@
 /**
  * 844. Backspace String Compare
 Easy
-Topics
-premium lock icon
-Companies
+
 Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
 
 Note that after backspacing an empty text, the text will continue empty.
@@ -31,3 +29,26 @@ s and t only contain lowercase letters and '#' characters.
 
 Follow up: Can you solve it in O(n) time and O(1) space?
  */
+
+// initial sln
+
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var backspaceCompare = function(s, t) {
+    let sRun = []
+    let tRun = []
+
+    for (char of s) {
+        if (char === '#') sRun.pop()
+        else (sRun.push(char))
+    }
+    for (char of t) {
+        if (char === '#') tRun.pop()
+        else (tRun.push(char))
+    }
+
+    return sRun.toString() === tRun.toString()
+};
