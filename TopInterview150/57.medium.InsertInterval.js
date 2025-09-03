@@ -103,3 +103,57 @@ var insert = function (intervals, newInterval) {
     console.log(intervals)
     return intervals
 };
+
+
+//cleaned up
+
+/**
+ * @param {number[][]} intervals
+ * @param {number[]} newInterval
+ * @return {number[][]}
+ */
+var insert = function (intervals, newInterval) {
+    const [start, end] = newInterval
+    let left = null
+    let right = null
+
+    if (!intervals.length) return [newInterval]
+
+    for (let i = 0; i < intervals.length; i++) {
+        const iStart = intervals[i][0]
+        const iEnd = intervals[i][1]
+        if (start <= iEnd) {
+            left = i
+            for (let j = i; j < intervals.length; j++) {
+                const jStart = intervals[j][0]
+                const jEnd = intervals[j][1]
+                if (end <= jEnd) {
+                    if (end < jStart) {
+                        right = j - 1
+                        break
+                    }
+                    right = j
+                    break
+                }
+            }
+            break
+        }
+    }
+    if (left === null) {
+        intervals.push(newInterval)
+        return intervals
+    }
+    if (right === null) {
+        right = intervals.length - 1
+    }
+    if (right < 0) {
+        intervals.splice(left, 0, newInterval)
+        return intervals
+    }
+
+    const insertLeft = Math.min(intervals[left][0], start)
+    const insertRight = Math.max(intervals[right][1], end)
+    const insertion = [insertLeft, insertRight]
+    intervals.splice(left, right + 1 - left, insertion)
+    return intervals
+};
