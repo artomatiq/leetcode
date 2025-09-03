@@ -34,3 +34,72 @@ newInterval.length == 2
  */
 
 
+//initial solution
+
+/**
+ * @param {number[][]} intervals
+ * @param {number[]} newInterval
+ * @return {number[][]}
+ */
+var insert = function (intervals, newInterval) {
+    const [start, end] = newInterval
+    const result = []
+    const overlaps = {}
+    let left = null
+    let right = null
+
+    if (!intervals.length) return [newInterval]
+
+    for (let i = 0; i < intervals.length; i++) {
+        console.log('...')
+        console.log('now doing: ', intervals[i])
+
+        const iStart = intervals[i][0]
+        const iEnd = intervals[i][1]
+
+        if (start <= iEnd) {
+            console.log(`${start} <= curEnd`)
+            left = i
+            console.log('left found: ', left)
+            for (let j = i; j < intervals.length; j++) {
+                console.log('...')
+                console.log('now doing j: ', intervals[j])
+                const jStart = intervals[j][0]
+                const jEnd = intervals[j][1]
+
+                if (end <= jEnd) {
+                    if (end < jStart) {
+                        right = j - 1
+                        console.log('right found: ', right)
+                        break
+                    }
+                    right = j
+                    console.log('right found: ', right)
+                    break
+                }
+            }
+            break
+        }
+    }
+    if (left === null) {
+        intervals.push(newInterval)
+        return intervals
+    }
+    if (right === null) {
+        right = intervals.length - 1
+        console.log('right has to be: ', right)
+    }
+    if (right < 0) {
+        intervals.splice(left, 0, newInterval)
+        return intervals
+    }
+
+    console.log('lr', left, right)
+    const insertLeft = Math.min(intervals[left][0], start)
+    const insertRight = Math.max(intervals[right][1], end)
+    const insertion = [insertLeft, insertRight]
+    console.log('the insertion is: ', insertion)
+    intervals.splice(left, right + 1 - left, insertion)
+    console.log(intervals)
+    return intervals
+};
