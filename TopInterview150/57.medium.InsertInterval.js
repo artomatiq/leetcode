@@ -120,8 +120,7 @@ var insert = function (intervals, newInterval) {
     if (!intervals.length) return [newInterval]
 
     for (let i = 0; i < intervals.length; i++) {
-        const iStart = intervals[i][0]
-        const iEnd = intervals[i][1]
+        const [iStart, iEnd] = intervals[i]
         if (start <= iEnd) {
             left = i
             for (let j = i; j < intervals.length; j++) {
@@ -154,6 +153,50 @@ var insert = function (intervals, newInterval) {
     const insertLeft = Math.min(intervals[left][0], start)
     const insertRight = Math.max(intervals[right][1], end)
     const insertion = [insertLeft, insertRight]
+    intervals.splice(left, right + 1 - left, insertion)
+    return intervals
+};
+
+//final version
+
+/**
+ * @param {number[][]} intervals
+ * @param {number[]} newInterval
+ * @return {number[][]}
+ */
+var insert = function (intervals, newInterval) {
+    const [start, end] = newInterval
+    let left = null
+    let right = null
+
+    for (let i = 0; i < intervals.length; i++) {
+        const [iStart, iEnd] = intervals[i]
+        if (start <= iEnd) {
+            left = i
+            for (let j = i; j < intervals.length; j++) {
+                const [jStart, jEnd] = intervals[j]
+                if (end <= jEnd) {
+                    if (end < jStart) {
+                        right = j - 1
+                        break
+                    }
+                    right = j
+                    break
+                }
+            }
+            break
+        }
+    }
+    if (left === null) return [...intervals, newInterval]
+    if (right === null) right = intervals.length - 1
+    if (right < 0) {
+        intervals.splice(left, 0, newInterval)
+        return intervals
+    }
+    const insertion = [
+        Math.min(intervals[left][0], start),
+        Math.max(intervals[right][1], end)
+    ]
     intervals.splice(left, right + 1 - left, insertion)
     return intervals
 };
