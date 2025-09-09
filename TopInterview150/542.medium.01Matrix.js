@@ -41,55 +41,78 @@ var updateMatrix = function (mat) {
 
     //visit all zeroes, start the que with 1s
     console.log('finding zeroes and starting que')
+    console.log('set has it? ', set.has('115'))
     for (let m = 0; m < rows; m++) {
-        // console.log('m: ', m)
+        console.log('...m: ', m)
         for (let n = 0; n < cols; n++) {
-            // console.log('n: ', n)
+            console.log('n: ', n)
             if (mat[m][n] === 0) {
-                // console.log('found zero at m: ', m, ' n: ', n)
                 changeNeighbors(m, n, 0)
+                console.log('set has it? ', set.has('115'))
             }
         }
     }
 
     function changeNeighbors(m, n, target) {
-        let changed = false
-        set.add(`${m}${n}`)
+        set.add(`${m},${n}`)
+        if (m===1 && n===15) {
+            console.log('adding 1|15 to the set')
+        }
         const directions = [
             { direction: 'down', row: m + 1, col: n },
             { direction: 'right', row: m, col: n + 1 },
             { direction: 'up', row: m - 1, col: n },
             { direction: 'left', row: m, col: n - 1 }
         ]
+
+        // console.log('now checking neighbors of', m, ' ', n)
         for (const item of directions) {
+            if (m === 1 && n === 14) {
+                console.log(item.direction)
+            }
             //if neighbor is out of bounds
-            // console.log('now checking ', item.direction, ' neighbor', ' for target ', target)
             if (item.row < 0 || item.row >= rows || item.col < 0 || item.col >= cols) continue
             //neighbor already changed
-            if (set.has(`${item.row}${item.col}`)) continue
+            if (set.has(`${item.row},${item.col}`)) {
+                if (m === 1 && n === 14) {
+                    console.log('set already has this neighbor')
+                }
+                continue
+            }
 
             if (target !== 0) {
+                if (item.row === 1 && item.col === 14) {
+                    console.log('target is not zero')
+                }
                 mat[item.row][item.col] = target + 1
-                changed = true
+                if (m === 1 && n === 14) {
+                    console.log(console.log('now checking neighbors of', m, ' ', n))
+                }
             }
             if (mat[item.row][item.col] !== 0) {
-                // console.log('adding to que')
                 que.push([item.row, item.col])
-                set.add(`${item.row}${item.col}`)
-                changed = true
+                if (m === 1 && n === 14) {
+                    console.log(console.log('now checking neighbors of', m, ' ', n))
+                }
+                set.add(`${item.row},${item.col}`)
+                if (item.row === 1 && item.col === 15) {
+                    console.log(item.row, ' ', item.col, 'added to que')
+                    console.log('here is the que ', que)
+                }
             }
         }
-        return changed
     }
 
-    console.log(que)
+    // console.log(que)
     // console.log('head: ', head)
 
     while (head < que.length) {
+        console.log('........head: ', head)
         const [row, col] = que[head]
         const target = mat[row][col]
-        // console.log('now doing ', row, col, 'for target: ', target)
-        changing = changeNeighbors(row, col, target)
+        console.log('.....now doing ', row, col)
+        console.log('set has it? ', set.has('115'))
+        changeNeighbors(row, col, target)
         head++
     }
 
