@@ -239,3 +239,47 @@ var updateMatrix = function (mat) {
     }
     return mat
 };
+
+
+//final
+
+/**
+ * @param {number[][]} mat
+ * @return {number[][]}
+ */
+var updateMatrix = function (mat) {
+    const rows = mat.length
+    const cols = mat[0].length
+    const visited = Array.from({ length: rows }, () => Array(cols).fill(false))
+    const que = []
+
+    for (let m = 0; m < rows; m++) {
+        for (let n = 0; n < cols; n++) {
+            if (mat[m][n] === 0) {
+                que.push([m, n]);
+                visited[m][n] = true;
+            }
+        }
+    }
+    function changeNeighbors(m, n, target) {
+        visited[m][n] = true
+        for (const [row, col] of [[1,0], [0,1], [-1,0], [0,-1]]) {
+            const neighborRow = m + row
+            const neighborCol = n + col
+            if (neighborRow < 0 || neighborRow >= rows ||
+                neighborCol < 0 || neighborCol >= cols ||
+                visited[neighborRow][neighborCol]
+            ) continue
+            mat[neighborRow][neighborCol] = target + 1
+            que.push([neighborRow, neighborCol])
+            visited[neighborRow][neighborCol] = true
+        }
+    }
+    let head = 0
+    while (head < que.length) {
+        const [row, col] = que[head++]
+        const target = mat[row][col]
+        changeNeighbors(row, col, target)
+    }
+    return mat
+};
