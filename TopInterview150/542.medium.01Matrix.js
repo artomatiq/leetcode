@@ -177,3 +177,65 @@ var updateMatrix = function (mat) {
     }
     return mat
 };
+
+/**
+ * set.add(`${neighborRow},${neighborCol}`)
+ * 
+ * this stringification process is inefficient, it's better to use an array, especially since its size will be predifined
+ */
+
+
+/**
+ * @param {number[][]} mat
+ * @return {number[][]}
+ */
+var updateMatrix = function (mat) {
+    const rows = mat.length
+    const cols = mat[0].length
+    const visited = Array.from( {length: rows}, () => Array(cols).fill(false))
+    const que = []
+
+    for (let m = 0; m < rows; m++) {
+        for (let n = 0; n < cols; n++) {
+            if (mat[m][n] === 0) {
+                changeNeighbors(m, n, 0)
+            }
+        }
+    }
+    function changeNeighbors(m, n, target) {
+        visited[m][n] = true
+        const directions = [
+            { direction: 'down', row: m + 1, col: n },
+            { direction: 'right', row: m, col: n + 1 },
+            { direction: 'up', row: m - 1, col: n },
+            { direction: 'left', row: m, col: n - 1 }
+        ]
+        for (const item of directions) {
+            const neighborRow = item.row
+            const neighborCol = item.col
+
+            if (neighborRow < 0 || neighborRow >= rows || 
+                neighborCol < 0 || neighborCol >= cols ||
+                visited[neighborRow][neighborCol]
+            ) 
+            continue
+
+            if (target !== 0) {
+                mat[neighborRow][neighborCol] = target + 1
+            }
+            if (mat[neighborRow][neighborCol] !== 0) {
+                que.push([neighborRow, neighborCol])
+                visited[neighborRow][neighborCol] = true
+            }
+        }
+    }
+
+    let head = 0
+    while (head < que.length) {
+        const [row, col] = que[head]
+        const target = mat[row][col]
+        changeNeighbors(row, col, target)
+        head++
+    }
+    return mat
+};
