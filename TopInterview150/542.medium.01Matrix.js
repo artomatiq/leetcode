@@ -283,3 +283,38 @@ var updateMatrix = function (mat) {
     }
     return mat
 };
+
+
+// ChatGPT version
+
+/**
+ * @param {number[][]} mat
+ * @return {number[][]}
+ */
+var updateMatrix = function (mat) {
+    const rows = mat.length;
+    const cols = mat[0].length;
+    const que = [];
+
+    for (let m = 0; m < rows; m++) {
+        for (let n = 0; n < cols; n++) {
+            if (mat[m][n] === 0) {
+                que.push([m, n]);
+            } else {
+                mat[m][n] = -1; //mark as unprocessed
+            }
+        }
+    }
+    let head = 0;
+    while (head < que.length) {
+        const [row, col] = que[head++];
+        for (const [dr, dc] of [[1,0], [-1,0], [0,1], [0,-1]]) {
+            const r = row + dr;
+            const c = col + dc;
+            if (r < 0 || r >= rows || c < 0 || c >= cols || mat[r][c] !== -1) continue;
+            mat[r][c] = mat[row][col] + 1;
+            que.push([r, c]);
+        }
+    }
+    return mat;
+};
