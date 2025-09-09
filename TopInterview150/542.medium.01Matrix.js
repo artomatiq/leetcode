@@ -118,3 +118,62 @@ var updateMatrix = function (mat) {
 
     return mat
 };
+
+
+//cleaner version
+
+/**
+ * @param {number[][]} mat
+ * @return {number[][]}
+ */
+var updateMatrix = function (mat) {
+    const rows = mat.length
+    const cols = mat[0].length
+    const set = new Set()
+    const que = []
+    let head = 0
+
+    //visit all zeroes, start the que with 1s
+    for (let m = 0; m < rows; m++) {
+        for (let n = 0; n < cols; n++) {
+            if (mat[m][n] === 0) {
+                changeNeighbors(m, n, 0)
+            }
+        }
+    }
+
+    function changeNeighbors(m, n, target) {
+        set.add(`${m},${n}`)
+        const directions = [
+            { direction: 'down', row: m + 1, col: n },
+            { direction: 'right', row: m, col: n + 1 },
+            { direction: 'up', row: m - 1, col: n },
+            { direction: 'left', row: m, col: n - 1 }
+        ]
+        for (const item of directions) {
+            const neighborRow = item.row
+            const neighborCol = item.col
+            //if neighbor is out of bounds
+            if (neighborRow < 0 || neighborRow >= rows || neighborCol < 0 || neighborCol >= cols) continue
+            //neighbor already changed
+            if (set.has(`${neighborRow},${neighborCol}`)) {
+                continue
+            }
+
+            if (target !== 0) {
+                mat[neighborRow][neighborCol] = target + 1
+            }
+            if (mat[neighborRow][neighborCol] !== 0) {
+                que.push([neighborRow, neighborCol])
+                set.add(`${neighborRow},${neighborCol}`)
+            }
+        }
+    }
+    while (head < que.length) {
+        const [row, col] = que[head]
+        const target = mat[row][col]
+        changeNeighbors(row, col, target)
+        head++
+    }
+    return mat
+};
