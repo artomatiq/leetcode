@@ -33,3 +33,37 @@ Constraints:
 1 <= k <= points.length <= 104
 -104 <= xi, yi <= 104
  */
+
+
+
+//first working solution
+
+
+var kClosest = function(points, k) {
+    const sorted = new Array(points.length)
+
+    for (let i=0; i<points.length; i++) {
+        let a = points[i][0]**2
+        let b = points[i][1]**2
+        let hyp = a+b
+
+        console.log('i: ', i, 'hyp: ', hyp)
+
+        sorted[i] = [hyp, i]
+    }
+
+    console.log(sorted)
+
+    sorted.sort( (a, b) => a[0] - b[0])
+
+    console.log(sorted)
+
+    let result = Array(k)
+
+    for (let i = 0; i<k; i++) {
+        let index = sorted[i][1]
+        result[i] = points[index]
+    }
+
+    return result
+};
