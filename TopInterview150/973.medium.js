@@ -67,3 +67,20 @@ var kClosest = function(points, k) {
 
     return result
 };
+
+
+//cleaner version
+
+var kClosest = function (points, k) {
+
+    const sorted = points
+        .map((p, i) => [(p[0] ** 2 + p[1] ** 2), i])
+        .sort((a, b) => a[0] - b[0])
+
+    let result = Array(k)
+    for (let i = 0; i < k; i++) {
+        const [, index] = sorted[i];
+        result[i] = points[index]
+    }
+    return result
+};
