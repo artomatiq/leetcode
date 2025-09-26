@@ -39,3 +39,68 @@ Constraints:
  */
 
 
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+
+
+var threeSum = function (nums) {
+
+    const matchedTriplets = new Set()
+    const targetMap = new Map()
+    function skipPair(pair) {
+        console.log('checking pair: ', pair)
+        const [a, b] = pair
+
+        const newTriplet = [a, b, 0-a-b]
+        newTriplet.sort( (a, b) => a-b)
+        if (matchedTriplets.has(String(newTriplet))) {
+            console.log('matchedTriplets already has: ', newTriplet)
+            return true
+        }
+        return false
+    }
+    const result = []
+
+
+    for (let i = 1; i < nums.length; i++) {
+        console.log('...............i: ', i, '__', nums[i])
+
+        const match = targetMap.get(nums[i])
+        if (match) {
+            console.log('`${nums[i]} IS a target`')
+        
+            const triplet = [nums[i], nums[match[0]], nums[match[1]]]
+            triplet.sort((a, b) => a-b)
+            console.log('this is the triplet: ', triplet)
+            
+            //skip if triplet has already been added
+            if (matchedTriplets.has(String(triplet))) {
+                console.log('matchedTriplets already has: ', triplet)
+                continue
+            }
+            result.push(triplet)
+            matchedTriplets.add(String(triplet))
+            console.log(triplet, ' added to matchedTriplets')
+        } else {
+            console.log(`${nums[i]} is NOT a target`)
+        }
+        
+        for (let j = i - 1; j >= 0; j--) {
+            console.log('j ', j, '__', nums[j])
+            const pairMin = Math.min(nums[i], nums[j])
+            const pairMax = Math.max(nums[i], nums[j])
+            if (skipPair([nums[i], nums[j]])) continue
+            else {
+                const target = 0 - pairMin - pairMax
+                targetMap.set(target, [j, i])
+                console.log(`${target}: '${j}${i}' has been added to targetMap`)
+            }
+        }
+    }
+
+    return result
+};
+
+//the problem is that a target inside targetMap can be overwritten if a new target is identified before the old one finds a match
