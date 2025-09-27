@@ -174,3 +174,50 @@ var threeSum = function (nums) {
     }
     return result
 };
+
+
+
+
+//cleaner version
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var threeSum = function (nums) {
+    const matchedTriplets = new Set()
+    const targetMap = new Map()
+    const result = []
+    function skipPair(pair) {
+        const [a, b] = pair
+        const newTriplet = [a, b, 0 - a - b]
+        newTriplet.sort((a, b) => a - b)
+        if (matchedTriplets.has(String(newTriplet))) {
+            return true
+        }
+        return false
+    }
+    for (let i = 1; i < nums.length; i++) {
+        const matches = targetMap.get(nums[i])
+        if (matches) {
+            matches.forEach(match => {
+                const triplet = [nums[i], nums[match[0]], nums[match[1]]]
+                triplet.sort((a, b) => a - b)
+                if (matchedTriplets.has(String(triplet))) return
+                result.push(triplet)
+                matchedTriplets.add(String(triplet))
+            })
+        }
+        for (let j = i - 1; j >= 0; j--) {
+            if (skipPair([nums[i], nums[j]])) continue
+            else {
+                const target = 0 - nums[i] - nums[j]
+                if (targetMap.has(target)) {
+                    targetMap.get(target).push([j, i])
+                    continue
+                }
+                targetMap.set(target, [[j, i]])
+            }
+        }
+    }
+    return result
+};
